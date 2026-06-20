@@ -4,8 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Youcef Mekki - Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        :root {
+            --neon-blue: #00d4ff;
+            --neon-purple: #8844ff;
+            --neon-red: #ff2d4d;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Rajdhani', 'Segoe UI', sans-serif; }
+        html { scroll-snap-type: y proximity; }
         body { background: #000; color: #fff; scroll-behavior: smooth; overflow-x: hidden; }
 
         /* الكانفاس ثابت خلف كل شيء */
@@ -27,6 +35,7 @@
             position: relative;
             padding: 20px;
             z-index: 1;
+            scroll-snap-align: start;
         }
 
         /* طبقة داكنة خفيفة فوق الروبوت لكل قسم لتسهيل القراءة */
@@ -44,28 +53,50 @@
             border-radius: 15px;
             border: 1px solid rgba(255,255,255,0.2);
             background: rgba(255,255,255,0.06);
-            cursor: pointer; color: white; font-weight: bold;
+            cursor: pointer; color: white; font-weight: 700;
+            font-size: 1rem; letter-spacing: 0.5px;
             backdrop-filter: blur(12px);
             transition: 0.3s;
         }
-        .btn:hover { background: rgba(0,212,255,0.18); transform: translateY(-5px); border-color: #00d4ff; }
+        .btn:hover { background: rgba(0,212,255,0.18); transform: translateY(-5px); border-color: var(--neon-blue); }
+
+        /* أزرار التحميل (My Works) باللون الأحمر المفضل */
+        .btn-download:hover { background: rgba(255,45,77,0.18); border-color: var(--neon-red); box-shadow: 0 0 18px rgba(255,45,77,0.35); }
 
         /* صورة البروفايل */
         .profile-img {
-            width: 160px; height: 160px;
+            width: 140px; height: 140px;
             border-radius: 50%;
-            border: 4px solid #00d4ff;
-            box-shadow: 0 0 25px #00d4ff;
-            margin-bottom: 20px;
+            border: 3px solid var(--neon-blue);
+            box-shadow: 0 0 25px var(--neon-blue), 0 0 8px rgba(255,45,77,0.5);
+            margin-bottom: 14px;
             object-fit: cover;
             background-color: #333;
         }
 
         /* عنوان الرئيسية */
+        #home {
+            justify-content: flex-start;
+            padding-top: 9vh;
+        }
+        #home::before {
+            background: rgba(0,0,0,0.25);
+        }
         #home h1 {
-            text-shadow: 0 0 20px #00d4ff, 0 0 40px #00d4ff55;
-            margin-bottom: 20px;
-            font-size: 2rem;
+            text-shadow: 0 0 20px var(--neon-blue), 0 0 40px #00d4ff55;
+            margin-bottom: 6px;
+            font-family: 'Orbitron', 'Rajdhani', sans-serif;
+            font-size: 1.8rem;
+            letter-spacing: 1px;
+        }
+        #home .tagline {
+            color: var(--neon-red);
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            margin-bottom: 26px;
+            opacity: 0.9;
         }
 
         /* اختيار اللغة */
@@ -74,15 +105,31 @@
             z-index: 1000;
             display: flex; flex-direction: column; gap: 5px;
         }
-        .arrow { cursor: pointer; background: rgba(0,0,0,0.6); border: 1px solid #00d4ff44; padding: 5px 10px; border-radius: 5px; backdrop-filter: blur(8px); }
+        .arrow { cursor: pointer; background: rgba(0,0,0,0.6); border: 1px solid #00d4ff44; padding: 5px 10px; border-radius: 5px; backdrop-filter: blur(8px); transition: 0.25s; }
+        .arrow:hover { border-color: var(--neon-red); box-shadow: 0 0 10px rgba(255,45,77,0.4); }
 
-        h2 { margin-bottom: 20px; font-size: 1.6rem; text-shadow: 0 0 15px #00d4ff88; }
+        h2 {
+            margin-bottom: 14px; font-size: 1.6rem;
+            font-family: 'Orbitron', 'Rajdhani', sans-serif;
+            text-shadow: 0 0 15px #00d4ff88;
+            letter-spacing: 1px;
+        }
+        h2::after {
+            content: '';
+            display: block;
+            width: 50px; height: 3px;
+            margin: 12px auto 22px;
+            background: var(--neon-red);
+            box-shadow: 0 0 10px var(--neon-red);
+            border-radius: 2px;
+        }
 
         /* موبايل */
         @media (max-width: 600px) {
             .btn { width: 85vw; }
-            #home h1 { font-size: 1.5rem; }
-            .profile-img { width: 120px; height: 120px; }
+            #home h1 { font-size: 1.4rem; }
+            #home { padding-top: 7vh; }
+            .profile-img { width: 110px; height: 110px; }
         }
     </style>
 </head>
@@ -100,6 +147,7 @@
 <section id="home" class="section">
     <img src="myphoto.jpg" alt="Youcef Mekki" class="profile-img">
     <h1 id="name">Youcef Mekki</h1>
+    <div class="tagline" id="tagline">Full-Stack Developer</div>
     <button class="btn" onclick="document.getElementById('bio').scrollIntoView({behavior:'smooth'})">About Me</button>
     <button class="btn" onclick="document.getElementById('social').scrollIntoView({behavior:'smooth'})">Social Links</button>
     <button class="btn" onclick="document.getElementById('works').scrollIntoView({behavior:'smooth'})">My Works</button>
@@ -123,8 +171,9 @@
 
 <section id="works" class="section">
     <h2 id="works-title">My Works</h2>
-    <button class="btn" onclick="window.open('https://www.mediafire.com/file/kaxz2skfbqb6n1p/WiFi_Fixer_Pro_1.0_sign.apk/file')">WiFi Fixer Pro</button>
-    <button class="btn" onclick="window.open('https://www.mediafire.com/file/edn5t2jxe3h2l4w/Yuch_Vault_1.0.apk/file')">Yuch Vault</button>
+    <button class="btn btn-download" onclick="window.open('https://www.mediafire.com/file/kaxz2skfbqb6n1p/WiFi_Fixer_Pro_1.0_sign.apk/file')">WiFi Fixer Pro</button>
+    <button class="btn btn-download" onclick="window.open('https://www.mediafire.com/file/edn5t2jxe3h2l4w/Yuch_Vault_1.0.apk/file')">Yuch Vault</button>
+    <button class="btn btn-download" onclick="window.open('https://www.mediafire.com/file/ktarrep9980x8of/HiTV_3.13.2.apk/file')">HiTV</button>
     <button class="btn" onclick="document.getElementById('home').scrollIntoView({behavior:'smooth'})">Back</button>
 </section>
 
@@ -132,15 +181,16 @@
 <script>
 // ==================== اللغات ====================
 const data = {
-    en: { name:"Youcef Mekki", bioTitle:"About Me", bioText:"Full-stack developer and Cybersecurity enthusiast. Born 31/08/2008. Passionate about building secure systems.", social:"Social Networks", works:"My Works" },
-    ar: { name:"يوسف مكي",   bioTitle:"من أنا",    bioText:"مطور تطبيقات ومواقع، شغوف بالأمن السيبراني. مواليد 31/08/2008. أسعى دائماً لابتكار حلول تقنية آمنة.",        social:"حسابات التواصل", works:"أعمالي" },
-    fr: { name:"Youcef Mekki", bioTitle:"À propos", bioText:"Développeur full-stack et passionné de cybersécurité. Né le 31/08/2008. Engagé dans la création d'applications sécurisées.", social:"Réseaux Sociaux", works:"Mes Projets" }
+    en: { name:"Youcef Mekki", tagline:"Full-Stack Developer", bioTitle:"About Me", bioText:"Full-stack developer and Cybersecurity enthusiast. Born 31/08/2008. Passionate about building secure systems.", social:"Social Networks", works:"My Works" },
+    ar: { name:"يوسف مكي",   tagline:"مطور تطبيقات ومواقع", bioTitle:"من أنا",    bioText:"مطور تطبيقات ومواقع، شغوف بالأمن السيبراني. مواليد 31/08/2008. أسعى دائماً لابتكار حلول تقنية آمنة.",        social:"حسابات التواصل", works:"أعمالي" },
+    fr: { name:"Youcef Mekki", tagline:"Développeur Full-Stack", bioTitle:"À propos", bioText:"Développeur full-stack et passionné de cybersécurité. Né le 31/08/2008. Engagé dans la création d'applications sécurisées.", social:"Réseaux Sociaux", works:"Mes Projets" }
 };
 let langs=['en','ar','fr'], langIdx=0;
 function updateUI(){
     const l=langs[langIdx];
     document.getElementById('lang-display').innerText=l.toUpperCase();
     document.getElementById('name').innerText=data[l].name;
+    document.getElementById('tagline').innerText=data[l].tagline;
     document.getElementById('bio-title').innerText=data[l].bioTitle;
     document.getElementById('bio-text').innerText=data[l].bioText;
     document.getElementById('social-title').innerText=data[l].social;
@@ -171,6 +221,9 @@ scene.add(purpleLight);
 const rimLight = new THREE.DirectionalLight(0x00ffcc, 1.2);
 rimLight.position.set(0, 5, -5);
 scene.add(rimLight);
+const redLight = new THREE.PointLight(0xff2d4d, 1.8, 14);
+redLight.position.set(0, -1, 3);
+scene.add(redLight);
 
 // ===== مواد =====
 const metalMat  = new THREE.MeshStandardMaterial({ color:0x1a1a2e, metalness:0.9, roughness:0.2 });
@@ -178,6 +231,7 @@ const glowMat   = new THREE.MeshStandardMaterial({ color:0x00d4ff, emissive:0x00
 const darkMat   = new THREE.MeshStandardMaterial({ color:0x0d0d1a, metalness:0.8, roughness:0.3 });
 const eyeMat    = new THREE.MeshStandardMaterial({ color:0x00ffff, emissive:0x00ffff, emissiveIntensity:3 });
 const accentMat = new THREE.MeshStandardMaterial({ color:0x8844ff, emissive:0x8844ff, emissiveIntensity:1.2, metalness:0.5, roughness:0.2 });
+const redCoreMat = new THREE.MeshStandardMaterial({ color:0xff2d4d, emissive:0xff2d4d, emissiveIntensity:2.2, metalness:0.4, roughness:0.15 });
 
 function box(w,h,d,mat,x,y,z){ const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat); m.position.set(x,y,z); return m; }
 function cyl(rt,rb,h,seg,mat,x,y,z,rx=0,ry=0,rz=0){ const m=new THREE.Mesh(new THREE.CylinderGeometry(rt,rb,h,seg),mat); m.position.set(x,y,z); m.rotation.set(rx,ry,rz); return m; }
@@ -197,7 +251,7 @@ robotGroup.add(box(0.05,1.42,0.72, accentMat,-0.55,0,0));
 robotGroup.add(box(0.6,0.5,0.1, darkMat,  0,0.1,0.36));
 robotGroup.add(sph(0.08,glowMat,  0.15,0.15,0.44));
 robotGroup.add(sph(0.08,glowMat, -0.15,0.15,0.44));
-robotGroup.add(sph(0.06,accentMat,0,-0.05,0.44));
+robotGroup.add(sph(0.07,redCoreMat,0,-0.05,0.46));
 
 // رقبة
 robotGroup.add(cyl(0.18,0.22,0.25,12,darkMat, 0,0.82,0));
@@ -324,6 +378,7 @@ function animate(){
 
     // عيون تومض
     eyeMat.emissiveIntensity = 2+Math.sin(t*3);
+    redCoreMat.emissiveIntensity = 1.8+Math.sin(t*2.2)*0.8;
 
     // إضاءة
     blueLight.intensity   = 3+Math.sin(t*2)*0.8;
@@ -355,4 +410,4 @@ window.addEventListener('resize',()=>{
 });
 </script>
 </body>
-</html>
+                                                                                                                        </html>
